@@ -34,11 +34,10 @@ CREATE TABLE EMPLOYEE_T(
     HIRE_DATE   DATE,
     SALARY      NUMBER,
     CONSTRAINT PK_EMPLOYEE PRIMARY KEY(EMP_NO),
-    CONSTRAINT FK_DEPART_EMPLOYEE FOREIGN KEY(DEPART)REFERENCES DEPARTMENT_T(DEPT_NO) ON DELETE SET NULL
+    CONSTRAINT FK_DEPART_EMPLOYEE FOREIGN KEY(DEPART)REFERENCES DEPARTMENT_T(DEPT_NO) ON DELETE CASCADE
 );
-
 /*
---부서번호를 생성하는 시퀀스 만들기
+--부서번호를 생성하는 시퀀스 만들기 - AUTO INCREMENT NUMBER
 CREATE SEQUENCE DEPT_SEQ
     INCREMENT BY 1  -- 1 씩증가하는 번호를 만든다. (디폴트)
     START WITH 1    -- 1부터 번호를 만든다. (디폴트)
@@ -74,5 +73,40 @@ INSERT INTO EMPLOYEE_T(EMP_NO,NAME,DEPART,POSITION,GENDER,HIRE_DATE,SALARY) VALU
 INSERT INTO EMPLOYEE_T(EMP_NO,NAME,DEPART,POSITION,GENDER,HIRE_DATE,SALARY) VALUES(EMP_SEQ.NEXTVAL,'한성일',2,'과장','M','93-04-01',5000000);
 
 COMMIT;
+
+
+/* 수정과정 
+     UPDATE 테이블명 
+     SET 업데이트할 내용, 업데이트 내용 ,...
+     WHERE 조건식 
+*/
+
+-- 1. 부서번호가 3인 부서의 지역을 '인천'으로 변경하시오
+UPDATE DEPARTMENT_T
+   SET LOCATION = '인천'  --SET절의 등호(=)는 대입연산자 -뒤에 있는 것을 앞으로 보내달라는 것
+ WHERE DEPT_NO = 3;      -- WHRER 절의 등호(=)는 동등비교연산자
+
+ROLLBACK;
+
+-- 2. 부서번호가 2인 부서의 근무하는 모든 사원들의 연봉을 50만원 인상
+UPDATE EMPLOYEE_T
+SET SALARY = SALARY + 500000
+WHERE DEPART = 2;
+
+
+--삭제과정
+/*\
+    DELETE 
+      FROM 테이블
+     WHERE 조건식
+*/
+-- 1. 지역이 '인천'인 부서를 삭제 하시오. (인천에 근무하는 사원이 없다. )
+DELETE
+FROM DEPARTMENT_T
+WHERE LOCATION = '인천';
+-- 2. 지역이 서울인 부서를 삭제하시오 (서울에  근무하는 사원이 있다. -> ON DELETE SET NULL 옵션에 의해서 부서정보가 NULL값으로 처리된다. )
+DELETE
+FROM DEPARTMENT_T
+WHERE LOCATION = '서울';
 
  
