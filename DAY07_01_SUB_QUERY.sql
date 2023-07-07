@@ -1,0 +1,135 @@
+/* 
+    서브쿼리(sub query)
+    1. 메인 쿼리에 포함하는 하위쿼리를 서브쿼리라고 한다. 
+    2. 서브 쿼리를 먼저 실행해서 그 결과를 메인쿼리에 전달한다.
+    3. 종류
+        1) SELECT 절 :  스칼라 서브쿼리
+        2)   FROM 절 :   인라인 뷰(INLINE VIEW)
+        2)  WHERE 절 : 단일 행 서브쿼리 (결과가 1개)
+                       다중 행 서브쿼리 (결과가 N개)
+*/
+/*
+    단일 행 서브쿼리(SINGLE ROW SUB QUERY)
+    1. 결과가 1행이다. (1개이다. )
+    2. 언제 단일행 서브쿼리라고 부를수 있는가 
+        1) WHERE 절에서 사용한 칼럼이 PK 또는 UNIQUE 칼럼인 경우- 중복이 없는 칼럼
+        2) WHERE 절이 없지만 실행하면 결과가 한개 - 통계함수를 사용한 경우
+    3. 단일 행 서브쿼리 연산자 
+         =, !=, >, >=, <, <=
+    
+    다중 행 서브쿼리(MULTIPLE ROW SUB QUERY)
+    1. 결과가 N행이다.
+    2. 다중 행 서브쿼리 연산자 
+        IN, ANY, ALL, 등
+*/
+SELECT *    
+  FROM EMPLOYEES 
+ WHERE DEPARTMENT_ID = 50;
+ 
+ 
+SELECT *
+  FROM EMPLOYEES 
+ WHERE DEPARTMENT_ID IN(50, 60);
+ 
+/* WHERE절의 서브쿼리*/
+--1.사원 번호가 101인 사원의 직업과 동일한 직업을 가진 사원을 조회하기
+SELECT *
+  FROM EMPLOYEES
+ WHERE JOB_ID = (SELECT JOB_ID 
+                   FROM EMPLOYEES 
+                  WHERE EMPLOYEE_ID = 101);  --서브쿼리에 괄호를 안넣어도 결과는 같다. /EMPLOYEE_ID 는 PK이고 연산자가 = 이 사용되어서 단일행 서브쿼리인다. 
+                  
+--2. 부서명이 'IT'인 부서에 근무하는 사원조회하기
+SELECT *
+  FROM EMPLOYEES
+ WHERE DEPARTMENT_ID IN (SELECT DEPARTMENT_ID     --중복이 있을 수 있는 컬럼이면 다중 결과가 나올 수 있기 때문에 IN 을 쓴것임
+                          FROM DEPARTMENTS
+                         WHERE DEPARTMENT_NAME = 'IT');  --DEPARTMENT_NAME 은 PK 가 아니기 때문에 다중 행 서브쿼리이다. 
+                                                        --T서브쿼리의 DEPARTMENT_NAME 칼럼은 중복이 있을 수 있으므로 다중행 서브쿼리로 처리한다. 
+
+-- 3.'SEATTLE'에서 근무하는 사원 조회하기 
+SELECT *
+  FROM EMPLOYEES
+ WHERE DEPARTMENT_ID IN (SELECT DEPARTMENT_ID
+                           FROM DEPARTMENTS
+                          WHERE LOCATION_ID IN (SELECT LOCATION_ID 
+                                                  FROM LOCATIONS 
+                                                 WHERE CITY = 'Seattle'));
+                                                 
+SELECT E.*
+  FROM  LOCATIONS L JOIN DEPARTMENTS D
+    ON  L.LOCATION_ID = D.LOCATION_ID JOIN EMPLOYEES E 
+    ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
+ WHERE CITY = 'Seattle';
+          
+          ;
+-- 4. 연봉 가장 높은 사원 조회하기 
+SELECT *
+  FROM EMPLOYEES
+ WHERE SALARY = (SELECT MAX(SALARY)
+                   FROM EMPLOYEES);
+                   
+--5. 가장먼저 입사한 사원 조회하기 
+SELECT *
+  FROM EMPLOYEES
+ WHERE HIRE_DATE = (SELECT MIN(HIRE_DATE)
+                      FROM EMPLOYEES);
+                      
+--6. 평균 연봉 이상을 받는 사원 조회하기 
+SELECT *
+  FROM EMPLOYEES
+ WHERE SALARY >= (SELECT AVG(SALARY)
+                    FROM EMPLOYEES);
+                          
+/* FROM 절의 서브쿼리(인라인뷰) */
+--뷰 = 가상 테이블 
+
+  
+-- 1. 연봉이 3번째로 높은 사원 조회하기
+--    1) 높은 연봉 순으로 정렬한다. 
+--    2) 정렬 결과에 행번호를 붙인다. 
+--    3) 행번호 3을 가져온다. 
+SELECT 행번호, EMPLOYEE_ID
+  FROM (SELECT ROW_NUMBER() OVER(ORDER BY SALARY DESC) AS 행번호, EMPLOYEE_ID
+  FROM EMPLOYEES )
+  WHERE 행번호 = 3;
+  
+-- 2. 연봉 11~20번째 사원 조회하기 
+SELECT RN, EMPLOYEE_ID
+  FROM ( SELECT ROW_NUMBER() OVER(ORDER BY SALARY DESC) AS RN,EMPLOYEE_ID
+           FROM EMPLOYEES)
+ WHERE RN BETWEEN 11 AND 20;
+    
+-- ROWNUM() 행번호 가져오는 함수                            
+
+-- 3. 21 ~30 번째로 입사한 사원조회하기 
+SELECT EMPLOYEE_ID, HIRE_DATE
+  FROM (SELECT ROW_NUMBER() OVER(ORDER BY HIRE_DATE ASC) AS RN, EMPLOYEE_ID, HIRE_DATE
+          FROM EMPLOYEES)
+ WHERE RN BETWEEN 21 AND 30;
+              
+/* SELECT 절의 서브쿼리*/
+
+-- 부서번호가 50인 부서의 근무하는 사원번호 사원명 부서명 조회하기 (비상관) 
+SELECT (SELECT D.DEPARTMENT_NAME 
+          FROM DEPARTMENTS D 
+         WHERE D.DEPARTMENT_ID = 50) AS DEPT_NAME
+     , E.EMPLOYEE_ID
+     , E.FIRST_NAME
+     , E.LAST_NAME
+  FROM EMPLOYEES E
+ WHERE E.DEPARTMENT_ID = 50;
+ 
+-- 부서번호가 50인 부서의 근무하는 사원번호 사원명 부서명 조회하기 (상관)
+SELECT (SELECT D.DEPARTMENT_NAME 
+          FROM DEPARTMENTS D 
+         WHERE D.DEPARTMENT_ID = E.DEPARTMENT_ID 
+           AND D.DEPARTMENT_ID = 50) AS DEPT_NAME
+     , E.EMPLOYEE_ID
+     , E.FIRST_NAME
+     , E.LAST_NAME
+  FROM EMPLOYEES E;
+
+-- 
+                          
+                          
