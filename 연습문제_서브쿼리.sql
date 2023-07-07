@@ -48,6 +48,12 @@ SELECT *
                   WHERE DEPT_NAME = '영업부'); 
 
 
+SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
+  FROM EMPLOYEE_T
+ WHERE DEPART IN (SELECT DEPT_NO
+                    FROM DEPARTMENT_T
+                   WHERE DEPT_NAME = '영업부'); 
+
 -- 8. 직급이 '과장'인 사원들이 근무하는 부서 정보를 조회하시오.
 SELECT *
   FROM DEPARTMENT_T
