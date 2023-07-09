@@ -1,22 +1,22 @@
--- í…Œì´ë¸” ì‚­ì œ
+-- Å×ÀÌºí »èÁ¦
 DROP TABLE BUY_T;
 DROP TABLE PRODUCT_T;
 DROP TABLE USER_T;
 
--- ì‚¬ìš©ìž í…Œì´ë¸”
+-- »ç¿ëÀÚ Å×ÀÌºí
 CREATE TABLE USER_T (
-    USER_NO      NUMBER             NOT NULL         -- ì‚¬ìš©ìžë²ˆí˜¸(ê¸°ë³¸í‚¤)
-  , USER_ID      VARCHAR2(20 BYTE)  NOT NULL UNIQUE  -- ì‚¬ìš©ìžì•„ì´ë””
-  , USER_NAME    VARCHAR2(20 BYTE)  NULL             -- ì‚¬ìš©ìžëª…
-  , USER_YEAR    NUMBER(4)          NULL             -- íƒœì–´ë‚œë…„ë„
-  , USER_ADDR    VARCHAR2(100 BYTE) NULL             -- ì£¼ì†Œ
-  , USER_MOBILE1 VARCHAR2(3 BYTE)   NULL             -- ì—°ë½ì²˜1(010, 011 ë“±)
-  , USER_MOBILE2 VARCHAR2(8 BYTE)   NULL             -- ì—°ë½ì²˜2(12345678, 11111111 ë“±)
-  , USER_REGDATE DATE               NULL             -- ë“±ë¡ì¼
+    USER_NO      NUMBER             NOT NULL         -- »ç¿ëÀÚ¹øÈ£(±âº»Å°)
+  , USER_ID      VARCHAR2(20 BYTE)  NOT NULL UNIQUE  -- »ç¿ëÀÚ¾ÆÀÌµð
+  , USER_NAME    VARCHAR2(20 BYTE)  NULL             -- »ç¿ëÀÚ¸í
+  , USER_YEAR    NUMBER(4)          NULL             -- ÅÂ¾î³­³âµµ
+  , USER_ADDR    VARCHAR2(100 BYTE) NULL             -- ÁÖ¼Ò
+  , USER_MOBILE1 VARCHAR2(3 BYTE)   NULL             -- ¿¬¶ôÃ³1(010, 011 µî)
+  , USER_MOBILE2 VARCHAR2(8 BYTE)   NULL             -- ¿¬¶ôÃ³2(12345678, 11111111 µî)
+  , USER_REGDATE DATE               NULL             -- µî·ÏÀÏ
   , CONSTRAINT PK_USER PRIMARY KEY(USER_NO)
 );
 
--- ì œí’ˆ í…Œì´ë¸”
+-- Á¦Ç° Å×ÀÌºí
 CREATE TABLE PRODUCT_T (
     PROD_CODE     NUMBER            NOT NULL
   , PROD_NAME     VARCHAR2(20 BYTE) NULL
@@ -25,7 +25,7 @@ CREATE TABLE PRODUCT_T (
   , CONSTRAINT PK_PRODUCT PRIMARY KEY(PROD_CODE)
 );
 
--- êµ¬ë§¤ í…Œì´ë¸”
+-- ±¸¸Å Å×ÀÌºí
 CREATE TABLE BUY_T (
     BUY_NO     NUMBER NOT NULL
   , USER_NO    NUMBER NULL
@@ -36,40 +36,40 @@ CREATE TABLE BUY_T (
   , CONSTRAINT FK_PRODUCT_BUY FOREIGN KEY(PROD_CODE) REFERENCES PRODUCT_T(PROD_CODE) ON DELETE SET NULL
 );
 
--- ì‚¬ìš©ìž ì‹œí€€ìŠ¤
+-- »ç¿ëÀÚ ½ÃÄö½º
 DROP SEQUENCE USER_SEQ;
 CREATE SEQUENCE USER_SEQ ORDER;
 
--- ì œí’ˆ ì‹œí€€ìŠ¤
+-- Á¦Ç° ½ÃÄö½º
 DROP SEQUENCE PRODUCT_SEQ;
 CREATE SEQUENCE PRODUCT_SEQ ORDER;
 
--- êµ¬ë§¤ ì‹œí€€ìŠ¤
+-- ±¸¸Å ½ÃÄö½º
 DROP SEQUENCE BUY_SEQ;
 CREATE SEQUENCE BUY_SEQ ORDER;
 
--- ì‚¬ìš©ìž í…Œì´ë¸” ë°ì´í„°
-INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'YJS', 'ìœ ìž¬ì„', 1972, 'ì„œìš¸', '010', '11111111', '08/08/08');
-INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'KHD', 'ê°•í˜¸ë™', 1970, 'ê²½ë¶', '011', '22222222', '07/07/07');
-INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'KKJ', 'ê¹€êµ­ì§„', 1965, 'ì„œìš¸', '010', '33333333', '09/09/09');
-INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'KYM', 'ê¹€ìš©ë§Œ', 1967, 'ì„œìš¸', '010', '44444444', '15/05/05');
-INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'KJD', 'ê¹€ì œë™', 1974, 'ê²½ë‚¨', NULL, NULL, '13/03/03');
-INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'NHS', 'ë‚¨í¬ì„', 1971, 'ì¶©ë‚¨', '010', '55555555', '14/04/04');
-INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'SDY', 'ì‹ ë™ì—½', 1971, 'ê²½ê¸°', NULL, NULL, '08/10/10');
-INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'LHJ', 'ì´íœ˜ìž¬', 1972, 'ê²½ê¸°', '011', '66666666', '06/04/04');
-INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'LKK', 'ì´ê²½ê·œ', 1960, 'ê²½ë‚¨', '011', '77777777', '04/12/12');
-INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'PSH', 'ë°•ìˆ˜í™', 1970, 'ì„œìš¸', '010', '88888888', '12/05/05');
+-- »ç¿ëÀÚ Å×ÀÌºí µ¥ÀÌÅÍ
+INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'YJS', 'À¯Àç¼®', 1972, '¼­¿ï', '010', '11111111', '08/08/08');
+INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'KHD', '°­È£µ¿', 1970, '°æºÏ', '011', '22222222', '07/07/07');
+INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'KKJ', '±è±¹Áø', 1965, '¼­¿ï', '010', '33333333', '09/09/09');
+INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'KYM', '±è¿ë¸¸', 1967, '¼­¿ï', '010', '44444444', '15/05/05');
+INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'KJD', '±èÁ¦µ¿', 1974, '°æ³²', NULL, NULL, '13/03/03');
+INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'NHS', '³²Èñ¼®', 1971, 'Ãæ³²', '010', '55555555', '14/04/04');
+INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'SDY', '½Åµ¿¿±', 1971, '°æ±â', NULL, NULL, '08/10/10');
+INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'LHJ', 'ÀÌÈÖÀç', 1972, '°æ±â', '011', '66666666', '06/04/04');
+INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'LKK', 'ÀÌ°æ±Ô', 1960, '°æ³²', '011', '77777777', '04/12/12');
+INSERT INTO USER_T(USER_NO, USER_ID, USER_NAME, USER_YEAR, USER_ADDR, USER_MOBILE1, USER_MOBILE2, USER_REGDATE) VALUES (USER_SEQ.NEXTVAL, 'PSH', '¹Ú¼öÈ«', 1970, '¼­¿ï', '010', '88888888', '12/05/05');
 
--- ì œí’ˆ í…Œì´ë¸” ë°ì´í„°
-INSERT INTO PRODUCT_T(PROD_CODE, PROD_NAME, PROD_CATEGORY, PROD_PRICE) VALUES (PRODUCT_SEQ.NEXTVAL, 'ìš´ë™í™”', 'ì‹ ë°œ', 30);
-INSERT INTO PRODUCT_T(PROD_CODE, PROD_NAME, PROD_CATEGORY, PROD_PRICE) VALUES (PRODUCT_SEQ.NEXTVAL, 'ì²­ë°”ì§€', 'ì˜ë¥˜', 50);
-INSERT INTO PRODUCT_T(PROD_CODE, PROD_NAME, PROD_CATEGORY, PROD_PRICE) VALUES (PRODUCT_SEQ.NEXTVAL, 'ì±…', 'ìž¡í™”', 15);
-INSERT INTO PRODUCT_T(PROD_CODE, PROD_NAME, PROD_CATEGORY, PROD_PRICE) VALUES (PRODUCT_SEQ.NEXTVAL, 'ë…¸íŠ¸ë¶', 'ì „ìž', 1000);
-INSERT INTO PRODUCT_T(PROD_CODE, PROD_NAME, PROD_CATEGORY, PROD_PRICE) VALUES (PRODUCT_SEQ.NEXTVAL, 'ëª¨ë‹ˆí„°', 'ì „ìž', 200);
-INSERT INTO PRODUCT_T(PROD_CODE, PROD_NAME, PROD_CATEGORY, PROD_PRICE) VALUES (PRODUCT_SEQ.NEXTVAL, 'ë©”ëª¨ë¦¬', 'ì „ìž', 80);
-INSERT INTO PRODUCT_T(PROD_CODE, PROD_NAME, PROD_CATEGORY, PROD_PRICE) VALUES (PRODUCT_SEQ.NEXTVAL, 'ë²¨íŠ¸', 'ìž¡í™”', 30);
+-- Á¦Ç° Å×ÀÌºí µ¥ÀÌÅÍ
+INSERT INTO PRODUCT_T(PROD_CODE, PROD_NAME, PROD_CATEGORY, PROD_PRICE) VALUES (PRODUCT_SEQ.NEXTVAL, '¿îµ¿È­', '½Å¹ß', 30);
+INSERT INTO PRODUCT_T(PROD_CODE, PROD_NAME, PROD_CATEGORY, PROD_PRICE) VALUES (PRODUCT_SEQ.NEXTVAL, 'Ã»¹ÙÁö', 'ÀÇ·ù', 50);
+INSERT INTO PRODUCT_T(PROD_CODE, PROD_NAME, PROD_CATEGORY, PROD_PRICE) VALUES (PRODUCT_SEQ.NEXTVAL, 'Ã¥', 'ÀâÈ­', 15);
+INSERT INTO PRODUCT_T(PROD_CODE, PROD_NAME, PROD_CATEGORY, PROD_PRICE) VALUES (PRODUCT_SEQ.NEXTVAL, '³ëÆ®ºÏ', 'ÀüÀÚ', 1000);
+INSERT INTO PRODUCT_T(PROD_CODE, PROD_NAME, PROD_CATEGORY, PROD_PRICE) VALUES (PRODUCT_SEQ.NEXTVAL, '¸ð´ÏÅÍ', 'ÀüÀÚ', 200);
+INSERT INTO PRODUCT_T(PROD_CODE, PROD_NAME, PROD_CATEGORY, PROD_PRICE) VALUES (PRODUCT_SEQ.NEXTVAL, '¸Þ¸ð¸®', 'ÀüÀÚ', 80);
+INSERT INTO PRODUCT_T(PROD_CODE, PROD_NAME, PROD_CATEGORY, PROD_PRICE) VALUES (PRODUCT_SEQ.NEXTVAL, 'º§Æ®', 'ÀâÈ­', 30);
 
--- êµ¬ë§¤ í…Œì´ë¸” ë°ì´í„°
+-- ±¸¸Å Å×ÀÌºí µ¥ÀÌÅÍ
 INSERT INTO BUY_T(BUY_NO, USER_NO, PROD_CODE, BUY_AMOUNT) VALUES(BUY_SEQ.NEXTVAL, 2, 1, 2);
 INSERT INTO BUY_T(BUY_NO, USER_NO, PROD_CODE, BUY_AMOUNT) VALUES(BUY_SEQ.NEXTVAL, 2, 4, 1);
 INSERT INTO BUY_T(BUY_NO, USER_NO, PROD_CODE, BUY_AMOUNT) VALUES(BUY_SEQ.NEXTVAL, 4, 5, 1);
@@ -84,9 +84,9 @@ INSERT INTO BUY_T(BUY_NO, USER_NO, PROD_CODE, BUY_AMOUNT) VALUES(BUY_SEQ.NEXTVAL
 COMMIT;
 
 
-/****************************** ë¬¸ ì œ ****************************************/
+/****************************** ¹® Á¦ ****************************************/
 
--- 1. ì—°ë½ì²˜1ì´ ì—†ëŠ” ì‚¬ìš©ìžì˜ ì‚¬ìš©ìžë²ˆí˜¸, ì•„ì´ë””, ì—°ë½ì²˜1, ì—°ë½ì²˜2ë¥¼ ì¡°íšŒí•˜ì‹œì˜¤.
+-- 1. ¿¬¶ôÃ³1ÀÌ ¾ø´Â »ç¿ëÀÚÀÇ »ç¿ëÀÚ¹øÈ£, ¾ÆÀÌµð, ¿¬¶ôÃ³1, ¿¬¶ôÃ³2¸¦ Á¶È¸ÇÏ½Ã¿À.
 SELECT USER_NO
      , USER_ID
      , USER_MOBILE1
@@ -96,7 +96,7 @@ SELECT USER_NO
 
 
 
--- 2. ì—°ë½ì²˜2ê°€ '5'ë¡œ ì‹œìž‘í•˜ëŠ” ì‚¬ìš©ìžì˜ ì‚¬ìš©ìžë²ˆí˜¸, ì•„ì´ë””, ì—°ë½ì²˜1, ì—°ë½ì²˜2ë¥¼ ì¡°íšŒí•˜ì‹œì˜¤.
+-- 2. ¿¬¶ôÃ³2°¡ '5'·Î ½ÃÀÛÇÏ´Â »ç¿ëÀÚÀÇ »ç¿ëÀÚ¹øÈ£, ¾ÆÀÌµð, ¿¬¶ôÃ³1, ¿¬¶ôÃ³2¸¦ Á¶È¸ÇÏ½Ã¿À.
 SELECT USER_NO
      , USER_ID
      , USER_MOBILE1
@@ -104,58 +104,58 @@ SELECT USER_NO
   FROM USER_T
  WHERE SUBSTR(USER_MOBILE2,1,1) = 5;
 
--- 3. 2010ë…„ ì´í›„ì— ê°€ìž…í•œ ì‚¬ìš©ìžì˜ ì‚¬ìš©ìžë²ˆí˜¸, ì•„ì´ë””, ê°€ìž…ì¼ì„ ì¡°íšŒí•˜ì‹œì˜¤.
+-- 3. 2010³â ÀÌÈÄ¿¡ °¡ÀÔÇÑ »ç¿ëÀÚÀÇ »ç¿ëÀÚ¹øÈ£, ¾ÆÀÌµð, °¡ÀÔÀÏÀ» Á¶È¸ÇÏ½Ã¿À.
 SELECT USER_NO
      , USER_ID
      , USER_REGDATE
   FROM USER_T
  WHERE TO_CHAR(USER_REGDATE, 'YYYY') > '2010';
 
--- 4. ì‚¬ìš©ìžë²ˆí˜¸ì™€ ì—°ë½ì²˜1, ì—°ë½ì²˜2ë¥¼ ì—°ê²°í•˜ì—¬ ì¡°íšŒí•˜ì‹œì˜¤. ì—°ë½ì²˜ê°€ ì—†ëŠ” ê²½ìš° NULL ëŒ€ì‹  'None'ìœ¼ë¡œ ì¡°íšŒí•˜ì‹œì˜¤.
+-- 4. »ç¿ëÀÚ¹øÈ£¿Í ¿¬¶ôÃ³1, ¿¬¶ôÃ³2¸¦ ¿¬°áÇÏ¿© Á¶È¸ÇÏ½Ã¿À. ¿¬¶ôÃ³°¡ ¾ø´Â °æ¿ì NULL ´ë½Å 'None'À¸·Î Á¶È¸ÇÏ½Ã¿À.
 SELECT USER_NO
      , NVL(USER_MOBILE1 || USER_MOBILE2, 'None') AS USER_PHONE
  FROM USER_T;
      
 
--- 5. ì§€ì—­ë³„ ì‚¬ìš©ìžìˆ˜ë¥¼ ì¡°íšŒí•˜ì‹œì˜¤.
-SELECT USER_ADDR AS ì£¼ì†Œ
-     , COUNT(*) AS ì‚¬ìš©ìžìˆ˜
+-- 5. Áö¿ªº° »ç¿ëÀÚ¼ö¸¦ Á¶È¸ÇÏ½Ã¿À.
+SELECT USER_ADDR AS ÁÖ¼Ò
+     , COUNT(*) AS »ç¿ëÀÚ¼ö
   FROM USER_T
  GROUP BY USER_ADDR;
 
 
 
--- ì£¼ì†Œ   ì‚¬ìš©ìžìˆ˜
--- ê²½ë¶   1
--- ê²½ë‚¨   2
--- ì„œìš¸   4
--- ê²½ê¸°   2
--- ì¶©ë‚¨   1
+-- ÁÖ¼Ò   »ç¿ëÀÚ¼ö
+-- °æºÏ   1
+-- °æ³²   2
+-- ¼­¿ï   4
+-- °æ±â   2
+-- Ãæ³²   1
 
 
--- 6. 'ì„œìš¸', 'ê²½ê¸°'ë¥¼ ì œì™¸í•œ ì§€ì—­ë³„ ì‚¬ìš©ìžìˆ˜ë¥¼ ì¡°íšŒí•˜ì‹œì˜¤.
-SELECT USER_ADDR AS ì£¼ì†Œ
-     , COUNT(*) AS ì‚¬ìš©ìžìˆ˜
+-- 6. '¼­¿ï', '°æ±â'¸¦ Á¦¿ÜÇÑ Áö¿ªº° »ç¿ëÀÚ¼ö¸¦ Á¶È¸ÇÏ½Ã¿À.
+SELECT USER_ADDR AS ÁÖ¼Ò
+     , COUNT(*) AS »ç¿ëÀÚ¼ö
   FROM USER_T
- WHERE USER_ADDR NOT IN('ì„œìš¸', 'ê²½ê¸°')
+ WHERE USER_ADDR NOT IN('¼­¿ï', '°æ±â')
 GROUP BY USER_ADDR;
 
 
--- ì£¼ì†Œ   ì‚¬ìš©ìžìˆ˜
--- ê²½ë¶   1
--- ê²½ë‚¨   2
--- ì¶©ë‚¨   1
+-- ÁÖ¼Ò   »ç¿ëÀÚ¼ö
+-- °æºÏ   1
+-- °æ³²   2
+-- Ãæ³²   1
 
 
--- 7. êµ¬ë§¤ë‚´ì—­ì´ ì—†ëŠ” ì‚¬ìš©ìžë¥¼ ì¡°íšŒí•˜ì‹œì˜¤.
-SELECT U.USER_NO AS ë²ˆí˜¸
-     , U.USER_ID AS ì•„ì´ë””
- FROM USER_T U INNER JOIN BUY_T B
+-- 7. ±¸¸Å³»¿ªÀÌ ¾ø´Â »ç¿ëÀÚ¸¦ Á¶È¸ÇÏ½Ã¿À.
+SELECT U.USER_NO AS ¹øÈ£
+     , U.USER_ID AS ¾ÆÀÌµð
+ FROM USER_T U LEFT OUTER JOIN BUY_T B
    ON U.USER_NO = B.USER_NO
-WHERE USER_NO;
+WHERE BUY_NO IS NULL;
 
 
--- ë²ˆí˜¸  ì•„ì´ë””
+-- ¹øÈ£  ¾ÆÀÌµð
 -- 6     HNS
 -- 1     YJS
 -- 7     SDY
@@ -163,27 +163,27 @@ WHERE USER_NO;
 -- 9     LKK
 
 
--- 8. ì¹´í…Œê³ ë¦¬ë³„ êµ¬ë§¤íšŸìˆ˜ë¥¼ ì¡°íšŒí•˜ì‹œì˜¤.
-SELECT P.PROD_CATEGORY
-     , COUNT(B.BUY_NO)
+-- 8. Ä«Å×°í¸®º° ±¸¸ÅÈ½¼ö¸¦ Á¶È¸ÇÏ½Ã¿À.
+SELECT P.PROD_CATEGORY AS Ä«Å×°í¸®
+     , COUNT(B.BUY_NO) AS ±¸¸ÅÈ½¼ö
   FROM PRODUCT_T P INNER JOIN BUY_T B
     ON P.PROD_CODE = B.PROD_CODE
  GROUP BY P.PROD_CATEGORY;
--- ì¹´í…Œê³ ë¦¬  êµ¬ë§¤íšŸìˆ˜
--- ì „ìž      4
--- ì‹ ë°œ      2
--- ìž¡í™”      2
--- ì˜ë¥˜      2
+-- Ä«Å×°í¸®  ±¸¸ÅÈ½¼ö
+-- ÀüÀÚ      4
+-- ½Å¹ß      2
+-- ÀâÈ­      2
+-- ÀÇ·ù      2
 
 
--- 9. ì•„ì´ë””ë³„ êµ¬ë§¤íšŸìˆ˜ë¥¼ ì¡°íšŒí•˜ì‹œì˜¤.
-SELECT USER_ID
-     , COUNT(BUY_NO)
+-- 9. ¾ÆÀÌµðº° ±¸¸ÅÈ½¼ö¸¦ Á¶È¸ÇÏ½Ã¿À.
+SELECT USER_ID AS ¾ÆÀÌµð
+     , COUNT(BUY_NO) AS ±¸¸ÅÈ½¼ö
   FROM BUY_T B INNER JOIN USER_T U
     ON B.USER_NO = U.USER_NO
  GROUP BY USER_ID;
   
--- ì•„ì´ë””  êµ¬ë§¤íšŸìˆ˜
+-- ¾ÆÀÌµð  ±¸¸ÅÈ½¼ö
 -- KHD     3
 -- LHJ     2
 -- KYM     1
@@ -191,90 +191,170 @@ SELECT USER_ID
 -- PSH     3
 
 
--- 10. ì•„ì´ë””ë³„ êµ¬ë§¤íšŸìˆ˜ë¥¼ ì¡°íšŒí•˜ì‹œì˜¤. êµ¬ë§¤ ì´ë ¥ì´ ì—†ëŠ” ê²½ìš° êµ¬ë§¤íšŸìˆ˜ëŠ” 0ìœ¼ë¡œ ì¡°íšŒí•˜ê³  ì•„ì´ë””ì˜ ì˜¤ë¦„ì°¨ìˆœìœ¼ë¡œ ì¡°íšŒí•˜ì‹œì˜¤.
+-- 10. ¾ÆÀÌµðº° ±¸¸ÅÈ½¼ö¸¦ Á¶È¸ÇÏ½Ã¿À. ±¸¸Å ÀÌ·ÂÀÌ ¾ø´Â °æ¿ì ±¸¸ÅÈ½¼ö´Â 0À¸·Î Á¶È¸ÇÏ°í ¾ÆÀÌµðÀÇ ¿À¸§Â÷¼øÀ¸·Î Á¶È¸ÇÏ½Ã¿À. ***
+SELECT USER_ID AS ¾ÆÀÌµð
+     , USER_NAME AS °í°´¸í
+     , NVL(COUNT(BUY_NO),0 ) AS ±¸¸ÅÈ½¼ö
+     FROM BUY_T B RIGHT OUTER JOIN USER_T U
+    ON B.USER_NO = U.USER_NO
+GROUP BY USER_ID, USER_NAME, BUY_NO
+    HAVING USER_ID = USER_ID
+ ORDER BY USER_ID;
+
+AS ±¸¸ÅÈ½¼ö 
+
+BUY_T B RIGHT OUTER JOIN USER_T U
+    ON B.USER_NO = U.USER_NO
+ GROUP BY U.USER_ID, U.USER_NAME,B.BUY_NO
+ ORDER BY USER_ID;
+-- ¾ÆÀÌµð  °í°´¸í  ±¸¸ÅÈ½¼ö
+-- KHD     °­È£µ¿  3
+-- KJD     ±èÁ¦µ¿  1
+-- KKJ     ±è±¹Áø  0
+-- KYM     ±è¿ë¸¸  1
+-- LHJ     ÀÌÈÖÀç  2
+-- LKK     ÀÌ°æ±Ô  0
+-- NHS     ³²Èñ¼®  0
+-- PSH     ¹Ú¼öÈ«  3
+-- SDY     ½Åµ¿¿±  0
+-- YJS     À¯Àç¼®  0
+
+
+-- 11. Ä«Å×°í¸®°¡ 'ÀüÀÚ'ÀÎ Á¦Ç°À» ±¸¸ÅÇÑ °í°´ÀÇ ±¸¸Å³»¿ªÀ» Á¶È¸ÇÏ½Ã¿À.
+
+SELECT USER_NAME AS °í°´¸í
+     , PROD_NAME AS Á¦Ç°¸í
+     , (PROD_PRICE * BUY_AMOUNT) AS ±¸¸Å¾×
+  FROM BUY_T B INNER JOIN PRODUCT_T P 
+    ON B.PROD_CODE = P.PROD_CODE
+               INNER JOIN USER_T U
+    ON B.USER_NO = U.USER_NO
+ WHERE PROD_CATEGORY = 'ÀüÀÚ';
+ 
+-- °í°´¸í  Á¦Ç°¸í  ±¸¸Å¾×
+-- °­È£µ¿  ³ëÆ®ºÏ  1000
+-- ±è¿ë¸¸  ¸ð´ÏÅÍ  200
+-- ¹Ú¼öÈ«  ¸ð´ÏÅÍ  1000
+-- ¹Ú¼öÈ«  ¸Þ¸ð¸®  800
+
+
+-- 12. ¸ðµç Á¦Ç°ÀÇ Á¦Ç°¸í°ú ÆÇ¸ÅÈ½¼ö¸¦ Á¶È¸ÇÏ½Ã¿À. ÆÇ¸Å ÀÌ·ÂÀÌ ¾ø´Â Á¦Ç°Àº 0À¸·Î Á¶È¸ÇÏ½Ã¿À.
+SELECT PROD_NAME AS Á¦Ç°¸í
+     ,  NVL(CTN,0) AS ÆÇ¸ÅÈ½¼ö
+    FROM (SELECT COUNT(BUY_AMOUNT) AS CTN, PROD_NAME 
+                FROM BUY_T B RIGHT OUTER JOIN PRODUCT_T P 
+                                     ON B.PROD_CODE = P.PROD_CODE GROUP BY PROD_NAME);
+    
+    
+    
+-- Á¦Ç°¸í  ÆÇ¸ÅÈ½¼ö
+-- ¸Þ¸ð¸®  1°³
+-- ¿îµ¿È­  2°³
+-- Ã»¹ÙÁö  2°³
+-- ³ëÆ®ºÏ  1°³
+-- ¸ð´ÏÅÍ  2°³
+-- Ã¥      1°³
+-- º§Æ®    0°³
+
+
+-- 13. Á¦Ç°À» ±¸¸ÅÇÑ ÀÌ·ÂÀÌ ÀÖ´Â °í°´ÀÇ ¾ÆÀÌµð, °í°´¸í, ±¸¸ÅÈ½¼ö, ÃÑ±¸¸Å¾×À» Á¶È¸ÇÏ½Ã¿À.
 SELECT USER_ID
      , USER_NAME
-     , NVL(êµ¬ë§¤íšŸìˆ˜,0)
-FROM (SELECT USER_ID, USER_NAME, COUNT(BUY_NO) AS êµ¬ë§¤íšŸìˆ˜ FROM BUY_T B INNER JOIN USER_T U ON B.USER_NO = U.USER_NO GROUP BY USER_NO) ;
+     , BN
+     , AMO
+ FROM (SELECT USER_ID, USER_NAME, COUNT(BUY_NO) AS BN, SUM(BUY_AMOUNT * PROD_PRICE) AS AMO
+         FROM BUY_T B INNER JOIN USER_T U
+           ON B.USER_NO = U.USER_NO LEFT OUTER JOIN PRODUCT_T P ON B.PROD_CODE = P.PROD_CODE
+           GROUP BY USER_ID, USER_NAME);
+        
 
 
--- ì•„ì´ë””  ê³ ê°ëª…  êµ¬ë§¤íšŸìˆ˜
--- KHD     ê°•í˜¸ë™  3
--- KJD     ê¹€ì œë™  1
--- KKJ     ê¹€êµ­ì§„  0
--- KYM     ê¹€ìš©ë§Œ  1
--- LHJ     ì´íœ˜ìž¬  2
--- LKK     ì´ê²½ê·œ  0
--- NHS     ë‚¨í¬ì„  0
--- PSH     ë°•ìˆ˜í™  3
--- SDY     ì‹ ë™ì—½  0
--- YJS     ìœ ìž¬ì„  0
+-- ¾ÆÀÌµð  °í°´¸í  ±¸¸ÅÈ½¼ö  ÃÑ±¸¸Å¾×
+-- PSH     ¹Ú¼öÈ«  3         1860
+-- KYM     ±è¿ë¸¸  1         200
+-- KJD     ±èÁ¦µ¿  1         75
+-- LHJ     ÀÌÈÖÀç  2         80
+-- KHD     °­È£µ¿  3         1210
 
 
--- 11. ì¹´í…Œê³ ë¦¬ê°€ 'ì „ìž'ì¸ ì œí’ˆì„ êµ¬ë§¤í•œ ê³ ê°ì˜ êµ¬ë§¤ë‚´ì—­ì„ ì¡°íšŒí•˜ì‹œì˜¤.
--- ê³ ê°ëª…  ì œí’ˆëª…  êµ¬ë§¤ì•¡
--- ê°•í˜¸ë™  ë…¸íŠ¸ë¶  1000
--- ê¹€ìš©ë§Œ  ëª¨ë‹ˆí„°  200
--- ë°•ìˆ˜í™  ëª¨ë‹ˆí„°  1000
--- ë°•ìˆ˜í™  ë©”ëª¨ë¦¬  800
+-- 14. ±¸¸ÅÈ½¼ö°¡ 2È¸ ÀÌ»óÀÎ °í°´¸í°ú ±¸¸ÅÈ½¼ö¸¦ Á¶È¸ÇÏ½Ã¿À.
+SELECT USER_NAME AS °í°´¸í
+     , BN
+  FROM (SELECT USER_NAME 
+             , COUNT(BUY_NO) AS BN
+                FROM BUY_T B INNER JOIN USER_T U
+                  ON B.USER_NO = U.USER_NO 
+               GROUP BY USER_NAME)
+ WHERE BN >= 2
+ ORDER BY °í°´¸í;
+            
+-- °í°´¸í  ±¸¸ÅÈ½¼ö
+-- ÀÌÈÖÀç  2
+-- ¹Ú¼öÈ«  3
+-- °­È£µ¿  3
 
 
--- 12. ëª¨ë“  ì œí’ˆì˜ ì œí’ˆëª…ê³¼ íŒë§¤íšŸìˆ˜ë¥¼ ì¡°íšŒí•˜ì‹œì˜¤. íŒë§¤ ì´ë ¥ì´ ì—†ëŠ” ì œí’ˆì€ 0ìœ¼ë¡œ ì¡°íšŒí•˜ì‹œì˜¤.
--- ì œí’ˆëª…  íŒë§¤íšŸìˆ˜
--- ë©”ëª¨ë¦¬  1ê°œ
--- ìš´ë™í™”  2ê°œ
--- ì²­ë°”ì§€  2ê°œ
--- ë…¸íŠ¸ë¶  1ê°œ
--- ëª¨ë‹ˆí„°  2ê°œ
--- ì±…      1ê°œ
--- ë²¨íŠ¸    0ê°œ
+-- 15. ¾î¶² °í°´ÀÌ ¾î¶² Á¦Ç°À» ±¸¸ÅÇß´ÂÁö Á¶È¸ÇÏ½Ã¿À. ±¸¸Å ÀÌ·ÂÀÌ ¾ø´Â °í°´µµ Á¶È¸ÇÏ°í ¾ÆÀÌµð·Î ¿À¸§Â÷¼ø Á¤·ÄÇÏ½Ã¿À.
+SELECT USER_NAME AS °í°´¸í
+     , PN AS ±¸¸ÅÁ¦Ç°
+ FROM (SELECT USER_NAME
+            , NVL(PROD_NAME,'NULL') AS PN
+            , U.USER_ID
+         FROM BUY_T B LEFT OUTER JOIN PRODUCT_T P 
+           ON B.PROD_CODE = P.PROD_CODE RIGHT OUTER JOIN USER_T U
+           ON B.USER_NO = U.USER_NO
+        GROUP BY U.USER_ID, USER_NAME,NVL(PROD_NAME,'NULL')
+        ORDER BY USER_ID);
+            
+
+-- °í°´¸í   ±¸¸ÅÁ¦Ç°
+-- °­È£µ¿   ¿îµ¿È­
+-- °­È£µ¿   Ã»¹ÙÁö
+-- °­È£µ¿   ³ëÆ®ºÏ
+-- ±èÁ¦µ¿   Ã¥
+-- ±è±¹Áø   NULL
+-- ±è¿ë¸¸   ¸ð´ÏÅÍ
+-- ÀÌÈÖÀç   Ã»¹ÙÁö
+-- ÀÌÈÖÀç   Ã¥
+-- ÀÌ°æ±Ô   NULL
+-- ³²Èñ¼®   NULL
+-- ¹Ú¼öÈ«   ¸ð´ÏÅÍ
+-- ¹Ú¼öÈ«   ¿îµ¿È­
+-- ¹Ú¼öÈ«   ¸Þ¸ð¸®
+-- ½Åµ¿¿±   NULL
+-- À¯Àç¼®   NULL
 
 
--- 13. ì œí’ˆì„ êµ¬ë§¤í•œ ì´ë ¥ì´ ìžˆëŠ” ê³ ê°ì˜ ì•„ì´ë””, ê³ ê°ëª…, êµ¬ë§¤íšŸìˆ˜, ì´êµ¬ë§¤ì•¡ì„ ì¡°íšŒí•˜ì‹œì˜¤.
--- ì•„ì´ë””  ê³ ê°ëª…  êµ¬ë§¤íšŸìˆ˜  ì´êµ¬ë§¤ì•¡
--- PSH     ë°•ìˆ˜í™  3         1860
--- KYM     ê¹€ìš©ë§Œ  1         200
--- KJD     ê¹€ì œë™  1         75
--- LHJ     ì´íœ˜ìž¬  2         80
--- KHD     ê°•í˜¸ë™  3         1210
+-- 16. Á¦Ç° Å×ÀÌºí¿¡¼­ Á¦Ç°¸íÀÌ 'Ã¥'ÀÎ Á¦Ç°ÀÇ Ä«Å×°í¸®¸¦ '¼­Àû'À¸·Î ¼öÁ¤ÇÏ½Ã¿À.
+SELECT REPLACE(PROD_NAME, 'Ã¥', '¼­Àû') 
+  FROM PRODUCT_T;
+ 
+
+-- 17. ¿¬¶ôÃ³1ÀÌ '011'ÀÎ »ç¿ëÀÚÀÇ ¿¬¶ôÃ³1À» ¸ðµÎ '010'À¸·Î ¼öÁ¤ÇÏ½Ã¿À.
+SELECT REPLACE(USER_MOBILE1, '011', '010')
+     , USER_MOBILE2
+  FROM USER_T;
+  
+-- 18. ±¸¸Å¹øÈ£°¡ °¡Àå Å« ±¸¸Å³»¿ªÀ» »èÁ¦ÇÏ½Ã¿À.
+DELETE
+  FROM BUY_T
+ WHERE BUY_NO = (SELECT MAX(BUY_NO) FROM BUY_T);
+ 
 
 
--- 14. êµ¬ë§¤íšŸìˆ˜ê°€ 2íšŒ ì´ìƒì¸ ê³ ê°ëª…ê³¼ êµ¬ë§¤íšŸìˆ˜ë¥¼ ì¡°íšŒí•˜ì‹œì˜¤.
--- ê³ ê°ëª…  êµ¬ë§¤íšŸìˆ˜
--- ì´íœ˜ìž¬  2
--- ë°•ìˆ˜í™  3
--- ê°•í˜¸ë™  3
+-- 19. Á¦Ç°ÄÚµå°¡ 1ÀÎ Á¦Ç°À» »èÁ¦ÇÏ½Ã¿À. »èÁ¦ ÀÌÈÄ Á¦Ç°¹øÈ£°¡ 1ÀÎ Á¦Ç°ÀÇ ±¸¸Å³»¿ªÀÌ ¾î¶»°Ô º¯ÇÏ´ÂÁö Á¶È¸ÇÏ½Ã¿À.
+DELETE 
+  FROM PRODUCT_T
+ WHERE PROD_CODE = 1;
+
+--NULL ·Î º¯ÇÑ´Ù. 
+
+-- 20. »ç¿ëÀÚ¹øÈ£°¡ 5ÀÎ »ç¿ëÀÚ¸¦ »èÁ¦ÇÏ½Ã¿À. »ç¿ëÀÚ¹øÈ£°¡ 5ÀÎ »ç¿ëÀÚÀÇ ±¸¸Å ³»¿ªÀ» ¸ÕÀú »èÁ¦ÇÑ µÚ ÁøÇàÇÏ½Ã¿À.
+DELETE 
+          FROM BUY_T
+         WHERE USER_NO = 5;
 
 
--- 15. ì–´ë–¤ ê³ ê°ì´ ì–´ë–¤ ì œí’ˆì„ êµ¬ë§¤í–ˆëŠ”ì§€ ì¡°íšŒí•˜ì‹œì˜¤. êµ¬ë§¤ ì´ë ¥ì´ ì—†ëŠ” ê³ ê°ë„ ì¡°íšŒí•˜ê³  ì•„ì´ë””ë¡œ ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬í•˜ì‹œì˜¤.
--- ê³ ê°ëª…   êµ¬ë§¤ì œí’ˆ
--- ê°•í˜¸ë™   ìš´ë™í™”
--- ê°•í˜¸ë™   ì²­ë°”ì§€
--- ê°•í˜¸ë™   ë…¸íŠ¸ë¶
--- ê¹€ì œë™   ì±…
--- ê¹€êµ­ì§„   NULL
--- ê¹€ìš©ë§Œ   ëª¨ë‹ˆí„°
--- ì´íœ˜ìž¬   ì²­ë°”ì§€
--- ì´íœ˜ìž¬   ì±…
--- ì´ê²½ê·œ   NULL
--- ë‚¨í¬ì„   NULL
--- ë°•ìˆ˜í™   ëª¨ë‹ˆí„°
--- ë°•ìˆ˜í™   ìš´ë™í™”
--- ë°•ìˆ˜í™   ë©”ëª¨ë¦¬
--- ì‹ ë™ì—½   NULL
--- ìœ ìž¬ì„   NULL
-
-
--- 16. ì œí’ˆ í…Œì´ë¸”ì—ì„œ ì œí’ˆëª…ì´ 'ì±…'ì¸ ì œí’ˆì˜ ì¹´í…Œê³ ë¦¬ë¥¼ 'ì„œì 'ìœ¼ë¡œ ìˆ˜ì •í•˜ì‹œì˜¤.
-
-
--- 17. ì—°ë½ì²˜1ì´ '011'ì¸ ì‚¬ìš©ìžì˜ ì—°ë½ì²˜1ì„ ëª¨ë‘ '010'ìœ¼ë¡œ ìˆ˜ì •í•˜ì‹œì˜¤.
-
-
--- 18. êµ¬ë§¤ë²ˆí˜¸ê°€ ê°€ìž¥ í° êµ¬ë§¤ë‚´ì—­ì„ ì‚­ì œí•˜ì‹œì˜¤.
-
-
--- 19. ì œí’ˆì½”ë“œê°€ 1ì¸ ì œí’ˆì„ ì‚­ì œí•˜ì‹œì˜¤. ì‚­ì œ ì´í›„ ì œí’ˆë²ˆí˜¸ê°€ 1ì¸ ì œí’ˆì˜ êµ¬ë§¤ë‚´ì—­ì´ ì–´ë–»ê²Œ ë³€í•˜ëŠ”ì§€ ì¡°íšŒí•˜ì‹œì˜¤.
-
-
--- 20. ì‚¬ìš©ìžë²ˆí˜¸ê°€ 5ì¸ ì‚¬ìš©ìžë¥¼ ì‚­ì œí•˜ì‹œì˜¤. ì‚¬ìš©ìžë²ˆí˜¸ê°€ 5ì¸ ì‚¬ìš©ìžì˜ êµ¬ë§¤ ë‚´ì—­ì„ ë¨¼ì € ì‚­ì œí•œ ë’¤ ì§„í–‰í•˜ì‹œì˜¤.
+DELETE 
+  FROM USER_T
+ WHERE USER_NO = 5;
