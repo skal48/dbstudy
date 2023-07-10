@@ -63,8 +63,34 @@ SELECT DEPARTMENT_ID
 SELECT DEPARTMENT_ID
   FROM EMPLOYEES;
   
+--활용1. WITH문과 재귀쿼리
+WITH MY_SUBQUERY(N, TOTAL) AS (    --N, TOTAL MY_SUBQUERY의 칼럼을 의미한다.
+        SELECT 1, 1                 -- N =1, TOTAL =1을 의미하는 초기화 서브쿼리
+          FROM DUAL
+         UNION ALL
+        SELECT N + 1,TOTAL + (N +1)   -- N = N + 1, TOTAL = TOTAL + (N +1) 방식으로 반복해서 처리되는 부분여러번 처리되는 부분 
+          FROM MY_SUBQUERY
+        WHERE N < 10
+)
+SELECT N, TOTAL FROM MY_SUBQUERY; 
 
-  
+-- 활용2. WITH문과 재귀 쿼리를 활용한 사원의 레벨표시하기 
+--매니저가 몇 명인가에 따른 LVL표시하기 
+--매니저가 0명이다. : LVL =1 
+--매니저가 1명이다. : LVL =2
+WITH MY_SUBQUERY(LVL, EMPLOYEE_ID, FIRST_NAME, LAST_NAME, MANAGER_ID) AS (
+ --초기값(LEVEL = 1)을 지정하는 서브쿼리 
+ SELECT 1, EMPLOYEE_ID, FIRST_NAME, LAST_NAME, MANAGER_ID
+   FROM EMPLOYEES
+   WHERE MANAGER_ID IS NULL
+   UNION ALL 
+   -- 반복되서 호출되는 서브쿼리
+ SELECT M.LVL + 1 AS LVL, E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME, E.MANAGER_ID
+   FROM MY_SUBQUERY M INNER JOIN EMPLOYEES E
+     ON M.EMPLOYEE_ID = E.MANAGER_ID
+)
+SELECT LVL, EMPLOYEE_ID, FIRST_NAME, LAST_NAME, MANAGER_ID 
+  FROM MY_SUBQUERY ;
   
   
   
